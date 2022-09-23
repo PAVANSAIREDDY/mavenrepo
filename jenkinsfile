@@ -4,7 +4,7 @@ pipeline
     agent any
     stages
     {
-        stage('continuousDownload')
+        stage('continuousDownload_loans')
         {
             steps
             {
@@ -14,34 +14,13 @@ pipeline
                 }
             }
         }
-        stage('continuousbuild')
+        stage('continuousbuild_loans')
         {
             steps
             {
                 script
                 {
                     cicd.newmaven()
-                }
-            }
-        }
-        stage('continuousdeployment')
-        {
-            steps
-            {
-                script
-                {
-                    cicd.newdeploy("cicdshared","172.31.94.8","testapp")
-                }
-            }
-        }
-        stage('continuoustesting')
-        {
-            steps
-            {
-                script
-                {
-                    cicd.newgit("testing")
-                    cicd.newtest("cicdshared")
                 }
             }
         }
