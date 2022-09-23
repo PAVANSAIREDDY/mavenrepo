@@ -1,0 +1,49 @@
+@Library('mylibrary')_
+pipeline
+{
+    agent any
+    stages
+    {
+        stage('continuousDownload')
+        {
+            steps
+            {
+                script
+                {
+                    cicd.newgit("dellrep")
+                }
+            }
+        }
+        stage('continuousbuild')
+        {
+            steps
+            {
+                script
+                {
+                    cicd.newmaven()
+                }
+            }
+        }
+        stage('continuousdeployment')
+        {
+            steps
+            {
+                script
+                {
+                    cicd.newdeploy("cicdshared","172.31.94.8","testapp")
+                }
+            }
+        }
+        stage('continuoustesting')
+        {
+            steps
+            {
+                script
+                {
+                    cicd.newgit("testing")
+                    cicd.newtest("cicdshared")
+                }
+            }
+        }
+    }
+}
